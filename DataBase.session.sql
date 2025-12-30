@@ -142,3 +142,19 @@ CREATE TABLE sprints (
         FOREIGN KEY (project_id) REFERENCES projects(id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+--@block
+CREATE TABLE tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sprint_id INT NOT NULL,
+    user_id INT,
+    title VARCHAR(150) NOT NULL,
+    status ENUM('todo','in_progress','done') NOT NULL DEFAULT 'todo',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_tasks_sprint
+        FOREIGN KEY (sprint_id) REFERENCES sprints(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_tasks_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE SET NULL
+) ENGINE=InnoDB;
