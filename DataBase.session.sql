@@ -54,3 +54,20 @@ CREATE TABLE tasks (
     FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE SET NULL
 );
+
+--@block
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    task_id INT NOT NULL,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_comments_task
+    FOREIGN KEY (task_id) REFERENCES tasks(id)
+    ON DELETE CASCADE,
+
+    CONSTRAINT fk_comments_user
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+);
