@@ -83,3 +83,37 @@ CREATE TABLE notificatinons (
     FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE CASCADE
 )ENGINE=InnoDB;
+
+--@block
+DROP TABLE IF EXISTS user_tasks;
+
+--@block
+DROP TABLE IF EXISTS notifications;
+
+--@block
+SET FOREIGN_KEY_CHECKS = 0;
+
+--@block
+DROP TABLE IF EXISTS tasks;
+
+--@block
+DROP TABLE IF EXISTS sprints;
+
+--@block
+DROP TABLE IF EXISTS projects;
+
+--@block
+DROP TABLE IF EXISTS users;
+
+--@block
+SET FOREIGN_KEY_CHECKS = 1;
+
+--@block
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin','manager','member') NOT NULL DEFAULT 'member',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
