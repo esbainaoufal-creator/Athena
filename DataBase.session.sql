@@ -158,3 +158,46 @@ CREATE TABLE tasks (
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE SET NULL
 ) ENGINE=InnoDB;
+
+--@block
+CREATE TABLE notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_notifications_user2
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+--@block
+CREATE TABLE user_tasks (
+    user_id INT NOT NULL,
+    task_id INT NOT NULL,
+    assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id, task_id),
+    CONSTRAINT fk_user_tasks_user2
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_user_tasks_task2
+        FOREIGN KEY (task_id) REFERENCES tasks(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+--@block
+DROP TABLE IF EXISTS comments;
+
+--@block
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    task_id INT NOT NULL,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_comments_task2
+        FOREIGN KEY (task_id) REFERENCES tasks(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_comments_user2
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
