@@ -8,7 +8,7 @@
 
 
 <?php
-
+session_start();
 require_once "user.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -18,7 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = loginUser($email, $password);
 
     if ($user) {
-        echo "Login correcto. Bienvenido" . $user["name"];
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["user_name"] = $user["name"];
+        $_SESSION["user_role"] = $user["role"];
+        
+        echo "Login correcto. Bienvenido " . $user["name"];
+
     }else {
         echo "Email o contraseña incorrectos";
     }
