@@ -1,3 +1,5 @@
+
+
 <?php
 require_once "config/database.php";
 
@@ -17,4 +19,19 @@ function createUser($name, $email, $password, $role = "member") {
         ":role" => $role
 
     ]);
+}
+
+function loginUser($email, $password) {
+    global $pdo;
+
+    $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":email" => $email]);
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password, $user["password"])) {
+        return $user;
+    }
+    return false;
 }
