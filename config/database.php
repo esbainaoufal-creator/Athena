@@ -3,7 +3,7 @@
 $host = "localhost";
 $db   = "athena";
 $user = "root";
-$pass = "";
+$pass = "rif50";
 
 try {
     $pdo = new PDO(
