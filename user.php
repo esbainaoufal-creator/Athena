@@ -1,5 +1,3 @@
-
-
 <?php
 require_once "config/database.php";
 class User {
@@ -20,5 +18,14 @@ class User {
             ":password" => $hashedPassword,
             ":role" => $role
         ]);
+    }
+    public function login($email, $password) {
+        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":email" => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && password_verify($password, $user["password"])) {
+            return $user;
+        } return false;
     }
 }
