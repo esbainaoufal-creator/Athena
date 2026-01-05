@@ -58,5 +58,9 @@ class User {
         return false;
     }
 
+    public function isLoggedIn() {
+        return isset($_SESSION["user_id"]);
+    }
+
     
 }
