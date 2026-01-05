@@ -1,24 +1,20 @@
-<form method="POST">
-    <label>Name</label><br>
-    <input name="name" placeholder="Name"><br>
-    <label>Email</label><br>
-    <input name="email" placeholder="Email"><br>
-    <label>Password</label><br>
-    <input name="password" type="password" placeholder="Password"><br>
-</form>
-
 <?php
-
-require_once "user.php";
+session_start();
+require_once "../config/database.php";
+require_once "../user.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
 
-    if (createUser($name, $email, $password)) {
-        echo "Usuario creado correctamente";
-    } else {
-        echo "Error al crear usuario";
-    }
+        $name = $_POST["name"] ?? "";
+        $email = $_POST["email"] ?? "";
+        $password = $_POST["password"] ?? "";
+        $userModel = new User($pdo);
+        $created = $userModel->create($name, $email, $password);
+
+            if ($created) {
+                        echo "Usuario registrado correctamente";
+            } else {
+                        echo "Error al registrar el usuario";
+            }
 }
+?>
