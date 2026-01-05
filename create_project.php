@@ -7,6 +7,16 @@
 <?php
 require_once "config/database.php";
 require_once "Project.php";
+require_once "Project.php";
+
+$user = new User($pdo);
+if (!$user->isLoggedIn()) {
+    die("Debes iniciar sesión para crear un proyecto");
+}
+
+if (!in_array($_SESSION["user_role"], ["admin", "manager"])) {
+    die("No tienes permiso para crear un proyecto");
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $project = new Project($pdo);
