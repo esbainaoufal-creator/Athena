@@ -43,8 +43,12 @@ class Task
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus($id, $status)
+    public function updateStatus($task_id, $status, $user_id, $user_role)
     {
+        if (!$this->canEdit($task_id, $user_id, $user_role)) {
+            return false;
+        }
+
         $sql = "UPDATE " . $this->table . "
             SET status = :status
             WHERE id = :id";
@@ -52,9 +56,10 @@ class Task
 
         return $stmt->execute([
             ":status" => $status,
-            ":id" => $id
+            ":id" => $task_id
         ]);
     }
+
 
 
     public function canEdit($task_id, $user_id, $user_role)
