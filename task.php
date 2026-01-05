@@ -55,4 +55,25 @@ class Task
             ":id" => $id
         ]);
     }
+
+
+    public function canEdit($task_id, $user_id, $user_role)
+    {
+        if ($user_role === "admin") {
+            return true;
+        }
+
+        $sql = "SELECT user_id FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ":id" => $task_id
+        ]);
+        $task = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$task) {
+            return false;
+        }
+
+        return $task["user_id"] == $user_id;
+    }
 }
