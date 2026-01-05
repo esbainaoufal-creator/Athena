@@ -42,4 +42,17 @@ class Task
         ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updateStatus($id, $status)
+    {
+        $sql = "UPDATE " . $this->table . "
+            SET status = :status
+            WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([
+            ":status" => $status,
+            ":id" => $id
+        ]);
+    }
 }
