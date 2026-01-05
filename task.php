@@ -31,4 +31,15 @@ class Task
             ":status"    => $this->status ?? "todo"
         ]);
     }
+
+
+    public function getBySprint($sprint_id)
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE sprint_id = :sprint_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ":sprint_id" => $sprint_id
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
