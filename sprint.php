@@ -28,4 +28,13 @@ public function create() {
         ":end_date" => $this->end_date
     ]);
 }
+
+public function getByProject($project_id) {
+    $sql = "SELECT * FROM " . $this->table . "WHERE project_id = :project_id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([
+        ":project_id" => $project_id
+    ]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
