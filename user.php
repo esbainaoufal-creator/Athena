@@ -18,4 +18,22 @@ class User {
     }
 
     
+    public function register() {
+        $sql = "INSERT INTO " . $this->table . " 
+                (name, email, password, role) 
+                VALUES (:name, :email, :password, :role)";
+        $stmt = $this->conn->prepare($sql);
+
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+
+        return $stmt->execute([
+            ":name" => $this->name,
+            ":email" => $this->email,
+            ":password" => $this->password,
+            ":role" => $this->role ?? 'member'
+        ]);
+    }
+
+    
+    
 }
