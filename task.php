@@ -81,4 +81,10 @@ class Task
 
         return $task["user_id"] == $user_id;
     }
+
+
+    public function canAssign($user_role)
+    {
+        return in_array($user_role, ["admin", "manager"]);
+    }
 }
