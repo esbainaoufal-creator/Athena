@@ -62,5 +62,8 @@ class User {
         return isset($_SESSION["user_id"]);
     }
 
-    
+    public function logout() {
+        session_unset();
+        session_destroy();
+    }
 }
