@@ -29,4 +29,14 @@ class Comment
             ":content" => $this->content
         ]);
     }
+
+    public function getByTask($task_id)
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE task_id = :task_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ":task_id" => $task_id
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
