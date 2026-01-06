@@ -32,7 +32,6 @@ class Task
         ]);
     }
 
-
     public function getBySprint($sprint_id)
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE sprint_id = :sprint_id";
@@ -60,8 +59,6 @@ class Task
         ]);
     }
 
-
-
     public function canEdit($task_id, $user_id, $user_role)
     {
         if ($user_role === "admin") {
@@ -82,9 +79,25 @@ class Task
         return $task["user_id"] == $user_id;
     }
 
-
     public function canAssign($user_role)
     {
         return in_array($user_role, ["admin", "manager"]);
     }
+
+    public function assignToUser($task_id, $user_id, $actor_role) {
+    if (!$this->canAssign($actor_role)) {
+        return false;
+    }
+
+    $sql = "UPDATE " . $this->table . "
+            SET user_id = :user_id
+            WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+        ":user_id" => $user_id,
+        ":id" => $task_id
+    ]);
 }
+}
+
