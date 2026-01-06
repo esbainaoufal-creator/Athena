@@ -39,4 +39,24 @@ class Comment
         ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function canDelete($comment_id, $user_id, $user_role)
+    {
+        if ($user_role === "admin") {
+            return true;
+        }
+
+        $sql = "SELECT user_id FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ":id" => $comment_id
+        ]);
+        $comment = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$comment) {
+            return false;
+        }
+
+        return $comment["user_id"] == $user_id;
+    }
 }
