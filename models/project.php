@@ -15,9 +15,11 @@ class Project
     {
         $this->conn = $pdo;
     }
+
     public function create()
     {
-        $sql = "INSERT INTO" . $this->table . "
+
+        $sql = "INSERT INTO " . $this->table . " 
         (title, description, owner_id)
         VALUES (:title, :description, :owner_id)";
         $stmt = $this->conn->prepare($sql);
@@ -29,14 +31,17 @@ class Project
         ]);
     }
 
-    public function getALL() {
-        $sql = "SELECT * FROM" . $this->table;
+    public function getAll()
+    {
+        $sql = "SELECT * FROM " . $this->table; // espacio después de FROM
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getById($id)  {
-        $sql = "SELECT * FROM" . $this->table . "WHERE id =:id";
+
+    public function getById($id)
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE id = :id"; // espacios después de FROM y antes de WHERE
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([":id" => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);

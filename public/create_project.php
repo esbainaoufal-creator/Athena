@@ -8,6 +8,7 @@
 require_once "config/database.php";
 require_once "Project.php";
 require_once "Project.php";
+require_once "user.php";
 
 $user = new User($pdo);
 if (!$user->isLoggedIn()) {
