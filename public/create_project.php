@@ -5,10 +5,9 @@
 </form>
 
 <?php
-require_once "config/database.php";
-require_once "Project.php";
-require_once "Project.php";
-require_once "user.php";
+require_once "../config/database.php";
+require_once "../models/project.php";
+require_once "../models/user.php";
 
 $user = new User($pdo);
 if (!$user->isLoggedIn()) {
