@@ -46,4 +46,12 @@ class Project
         $stmt->execute([":id" => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getByOwner($owner_id)
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE owner_id = :owner_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([":owner_id" => $owner_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

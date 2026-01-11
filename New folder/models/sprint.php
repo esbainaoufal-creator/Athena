@@ -3,7 +3,7 @@ require_once "../config/database.php";
 
 
 
-class sprint {
+class Sprint {
     private $conn;
     private $table = "sprints";
 
